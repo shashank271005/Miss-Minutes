@@ -436,7 +436,11 @@ function App() {
   return (
     <div className={`app-shell mode-${activeMode}`}>
       {pages[activeMode]}
-      <nav className="mode-nav" aria-label="Clock modes">
+      <nav
+        className="mode-nav"
+        aria-label="Clock modes"
+        style={{ '--active-index': modes.findIndex(({ id }) => id === activeMode) }}
+      >
         {modes.map(({ id, label }) => (
           <button
             type="button"
