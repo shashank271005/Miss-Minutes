@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #000;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#root {
+  min-height: 100svh;
+}
