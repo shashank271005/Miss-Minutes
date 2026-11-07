@@ -171,7 +171,7 @@
   right: 0;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 9px 7px;
+  gap: 7px;
   width: 300px;
   padding: 14px;
   border: 1px solid #1e1e1e;

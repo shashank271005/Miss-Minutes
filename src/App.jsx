@@ -548,17 +548,17 @@ function App() {
         </div>
         {appearanceOpen && (
           <div className="theme-picker" role="dialog" aria-label="Appearance presets">
-            {themes.flatMap((item) => [item, { ...item, id: `${item.id}-split` }]).map((item) => {
+            {themes.map((item) => {
               const baseId = item.id.replace('-split', '')
               const baseTheme = themes.find((themeItem) => themeItem.id === baseId)
               return (
               <button
                 type="button"
-                className={`theme-option${theme === item.id ? ' is-selected' : ''}${item.id.endsWith('-split') ? ' is-split' : ''}`}
+                className={`theme-option is-split${theme === item.id ? ' is-selected' : ''}`}
                 key={item.id}
                 aria-label={`Use ${item.label} theme`}
                 aria-pressed={theme === item.id || theme === baseId}
-                onClick={() => setTheme(baseId)}
+                onClick={() => setTheme(item.id)}
               >
                 <span style={{ '--swatch-background': item.background, '--swatch-accent': baseTheme.accent }} />
                 <small>{item.label}</small>
