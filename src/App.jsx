@@ -314,14 +314,19 @@ function TimerPage() {
 
 function WorldClock() {
   const cities = [
-    { name: 'San Francisco', zone: 'America/Los_Angeles' },
-    { name: 'New York', zone: 'America/New_York' },
-    { name: 'London', zone: 'Europe/London' },
-    { name: 'Paris', zone: 'Europe/Paris' },
-    { name: 'Moscow', zone: 'Europe/Moscow' },
-    { name: 'Beijing', zone: 'Asia/Shanghai' },
-    { name: 'Tokyo', zone: 'Asia/Tokyo' },
-    { name: 'Sydney', zone: 'Australia/Sydney' },
+    { name: 'San Francisco', zone: 'America/Los_Angeles', mapPosition: [10, 29] },
+    { name: 'New York', zone: 'America/New_York', mapPosition: [25, 39.1] },
+    { name: 'Mexico City', zone: 'America/Mexico_City', mapPosition: [21.2, 49] },
+    { name: 'São Paulo', zone: 'America/Sao_Paulo', mapPosition: [36.2, 74] },
+    { name: 'London', zone: 'Europe/London', mapPosition: [47, 35] },
+    { name: 'Paris', zone: 'Europe/Paris', mapPosition: [47.5, 41] },
+    { name: 'Moscow', zone: 'Europe/Moscow', mapPosition: [58.7, 24.4] },
+    { name: 'Dubai', zone: 'Asia/Dubai', mapPosition: [61.6, 49.8] },
+    { name: 'Mumbai', zone: 'Asia/Kolkata', mapPosition: [66, 57.8] },
+    { name: 'Beijing', zone: 'Asia/Shanghai', mapPosition: [79.3, 39.3] },
+    { name: 'Tokyo', zone: 'Asia/Tokyo', mapPosition: [87.6, 35] },
+    { name: 'Singapore', zone: 'Asia/Singapore', mapPosition: [77.8, 64.8] },
+    { name: 'Sydney', zone: 'Australia/Sydney', mapPosition: [90.8, 83] },
   ]
   const [now, setNow] = useState(0)
 
@@ -350,13 +355,23 @@ function WorldClock() {
 
   return (
     <main className="world-clock-page" aria-label="World clock">
-      <div className="world-map" aria-hidden="true">
-        <span className="world-map-line line-one" />
-        <span className="world-map-line line-two" />
-        <span className="world-map-line line-three" />
-        <span className="world-map-continent continent-one" />
-        <span className="world-map-continent continent-two" />
-        <span className="world-map-continent continent-three" />
+      <div className="world-map" aria-label="World map with local times">
+        <img className="world-map-image" src="/World Map.png" alt="" />
+        <div className="world-map-markers">
+          {cities.map((city) => (
+            <div
+              className="world-map-marker"
+              key={city.zone}
+              style={{ left: `${city.mapPosition[0]}%`, top: `${city.mapPosition[1]}%` }}
+            >
+              <span className="world-map-dot" />
+              <span className="world-map-label">
+                <strong>{city.name}</strong>
+                <small>{getCityTime(city).label}</small>
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="world-clock-cards">
         {cities.map((city) => {
