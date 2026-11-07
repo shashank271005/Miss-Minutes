@@ -476,6 +476,16 @@
   margin-bottom: 4px;
 }
 
+.timer-duration-label {
+  margin: 0;
+  transform: translateY(100px);
+  color: #bdbdbd;
+  font: 600 12px/1 Arial, sans-serif;
+  letter-spacing: .12em;
+  text-shadow: 0 0 10px rgb(255 255 255 / 18%);
+  text-transform: uppercase;
+}
+
 .timer-picker {
   display: flex;
   justify-content: center;
@@ -620,6 +630,56 @@
 
 .timer-running {
   gap: 42px;
+}
+
+.timer-stage {
+  min-height: 100svh;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.timer-stage:active {
+  cursor: grabbing;
+}
+
+.timer-track {
+  display: flex;
+  width: 200%;
+  min-height: 100svh;
+  transform: translateX(calc(var(--timer-shift) + var(--timer-drag-offset)));
+  transition: transform 650ms cubic-bezier(.22, .75, .2, 1);
+}
+
+.timer-view {
+  width: 50%;
+  min-width: 50%;
+}
+
+.timer-style-view {
+  display: grid;
+  place-items: center end;
+  box-sizing: border-box;
+  padding: 32px max(24px, 8vw) 150px 10vw;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 8%), rgb(0 0 0 / 42%)),
+    url('/krishna.png') center / cover no-repeat;
+}
+
+.timer-style-card {
+  display: grid;
+  justify-items: center;
+  gap: 32px;
+  width: min(100%, 430px);
+  transform: translate(-17vw, -5vh);
+}
+
+.timer-style-card .timer-ring::before {
+  inset: 9px;
+  background: #000;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .timer-ring {
@@ -1013,6 +1073,33 @@
   stroke-width: 1.7;
 }
 
+.app-shell.mode-timer.is-timer-style .mode-nav {
+  border-color: rgb(255 255 255 / 28%);
+  background: rgb(0 0 0 / 62%);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 18%),
+    0 10px 30px rgb(0 0 0 / 65%);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+.app-shell.mode-timer.is-timer-style .mode-nav::before {
+  background: rgb(255 255 255 / 14%);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 30%),
+    0 0 12px rgb(255 255 255 / 12%);
+}
+
+.app-shell.mode-timer.is-timer-style .mode-nav button {
+  color: rgb(255 255 255 / 68%);
+  text-shadow: 0 1px 4px #000;
+}
+
+.app-shell.mode-timer.is-timer-style .mode-nav button:hover,
+.app-shell.mode-timer.is-timer-style .mode-nav button.active {
+  color: #fff;
+}
+
 .clock-stage.is-dragging {
   cursor: grabbing;
 }
@@ -1048,6 +1135,23 @@
   transform: translateX(-50%);
 }
 
+.timer-style-hint {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  display: flex;
+  gap: 5px;
+  z-index: 2;
+  transform: translateX(-50%);
+}
+
+.timer-style-hint span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #444;
+}
+
 .clock-style-hint span {
   width: 4px;
   height: 4px;
@@ -1056,6 +1160,10 @@
 }
 
 .clock-style-hint .is-active {
+  background: #999;
+}
+
+.timer-style-hint .is-active {
   background: #999;
 }
 
