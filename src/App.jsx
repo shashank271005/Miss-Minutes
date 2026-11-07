@@ -326,7 +326,7 @@ function WorldClock() {
     { name: 'Beijing', zone: 'Asia/Shanghai', mapPosition: [79.3, 39.3] },
     { name: 'Tokyo', zone: 'Asia/Tokyo', mapPosition: [87.6, 35] },
     { name: 'Singapore', zone: 'Asia/Singapore', mapPosition: [77.8, 64.8] },
-    { name: 'Sydney', zone: 'Australia/Sydney', mapPosition: [90.8, 83] },
+    { name: 'Sydney', zone: 'Australia/Sydney', mapPosition: [84, 83] },
   ]
   const [now, setNow] = useState(0)
 
@@ -413,7 +413,10 @@ function App() {
   */
   const [time, setTime] = useState(getTime)
   const [showMinimal, setShowMinimal] = useState(false)
-  const [activeMode, setActiveMode] = useState('clock')
+  const [activeMode, setActiveMode] = useState(() => {
+    const savedMode = localStorage.getItem('miss-minutes-active-mode')
+    return ['clock', 'timer', 'stopwatch', 'world'].includes(savedMode) ? savedMode : 'clock'
+  })
   const [doNotDisturb, setDoNotDisturb] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   // const [appearanceOpen, setAppearanceOpen] = useState(false)
@@ -429,6 +432,10 @@ function App() {
     const timer = window.setInterval(() => setTime(getTime()), 1000)
     return () => window.clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem('miss-minutes-active-mode', activeMode)
+  }, [activeMode])
 
   /*
   useEffect(() => {
