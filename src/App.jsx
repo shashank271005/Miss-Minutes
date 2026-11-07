@@ -304,6 +304,7 @@ function App() {
   const [time, setTime] = useState(getTime)
   const [showMinimal, setShowMinimal] = useState(false)
   const [activeMode, setActiveMode] = useState('clock')
+  const [doNotDisturb, setDoNotDisturb] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
   const pointerStart = useRef(null)
@@ -315,6 +316,45 @@ function App() {
     const timer = window.setInterval(() => setTime(getTime()), 1000)
     return () => window.clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setDoNotDisturb(Boolean(document.fullscreenElement || document.webkitFullscreenElement))
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
+  const toggleDoNotDisturb = async () => {
+    const isFullscreen = Boolean(document.fullscreenElement || document.webkitFullscreenElement)
+
+    if (doNotDisturb || isFullscreen) {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen()
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen()
+      }
+      setDoNotDisturb(false)
+      return
+    }
+
+    try {
+      if (document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen({ navigationUI: 'hide' })
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen()
+      }
+      setDoNotDisturb(true)
+    } catch (error) {
+      console.error('Unable to enter Do Not Disturb mode.', error)
+      setDoNotDisturb(true)
+    }
+  }
 
   useEffect(() => {
     if (activeMode !== 'clock' || !showMinimal || !soundEnabled.current || !audioContext.current) return undefined
@@ -443,8 +483,17 @@ function App() {
   ]
 
   return (
-    <div className={`app-shell mode-${activeMode}`}>
+    <div className={`app-shell mode-${activeMode}${doNotDisturb ? ' is-do-not-disturb' : ''}`}>
       {pages[activeMode]}
+      <button
+        type="button"
+        className="dnd-toggle"
+        aria-label={doNotDisturb ? 'Turn off Do Not Disturb mode' : 'Turn on Do Not Disturb mode'}
+        aria-pressed={doNotDisturb}
+        onClick={toggleDoNotDisturb}
+      >
+        <span className="dnd-symbol" aria-hidden="true">☾</span>
+      </button>
       <nav
         className="mode-nav"
         aria-label="Clock modes"

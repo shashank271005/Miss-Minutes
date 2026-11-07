@@ -15,6 +15,40 @@
   color: #c4c4c4;
 }
 
+.dnd-toggle {
+  position: fixed;
+  z-index: 25;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #252525;
+  border-radius: 50%;
+  color: #666;
+  background: rgb(0 0 0 / 65%);
+  font: 400 21px/1 Arial, sans-serif;
+  cursor: pointer;
+  opacity: .7;
+  transition: color .2s ease, border-color .2s ease, opacity .2s ease;
+}
+
+.dnd-toggle:hover,
+.dnd-toggle[aria-pressed='true'] {
+  border-color: #555;
+  color: #ddd;
+  opacity: 1;
+}
+
+.dnd-symbol {
+  display: block;
+  transform: translateY(-1px);
+}
+
+.is-do-not-disturb .dnd-toggle {
+  color: #eee;
+}
+
 .mode-page {
   min-height: 100svh;
   box-sizing: border-box;
@@ -1040,5 +1074,10 @@
     left: 6px;
     width: 70px;
     transform: translateX(calc(var(--active-index) * 74px));
+  }
+
+  .dnd-toggle {
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
   }
 }
