@@ -628,11 +628,28 @@
 }
 
 .clock-view {
+  position: relative;
   width: 50%;
   flex: 0 0 50%;
   display: grid;
   place-items: center;
   transition: transform 650ms cubic-bezier(.22, .75, .2, 1), opacity 650ms ease;
+}
+
+.clock-style-hint {
+  position: absolute;
+  right: clamp(18px, 3vw, 48px);
+  bottom: 18%;
+  color: #555;
+  font: 600 10px / 1 Arial, sans-serif;
+  letter-spacing: .14em;
+  white-space: nowrap;
+}
+
+.clock-style-hint span {
+  margin-left: 5px;
+  color: #777;
+  font-size: 13px;
 }
 
 .clock-view:first-child {
@@ -880,6 +897,7 @@
 @media (max-width: 480px) {
   .clock-stage { padding: 12px; }
   .clock { gap: 8px; }
+  .clock-style-hint { right: 12px; bottom: 15%; }
   .minimal-clock { font-size: clamp(42px, 14vw, 90px); }
   .minimal-clock b { margin-inline: 8px; }
   .time-panel {

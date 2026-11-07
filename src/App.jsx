@@ -425,6 +425,7 @@ function App() {
               <span className="separator" aria-hidden="true">:</span>
               <TimePanel value={time.minutes} label="Minutes" />
             </section>
+            <span className="clock-style-hint" aria-hidden="true">STYLE 2 <span>→</span></span>
           </div>
           <div className="clock-view">
             <MinimalClock time={time} />
