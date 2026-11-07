@@ -307,11 +307,19 @@ function TimerPage() {
 }
 
 function App() {
+  const themes = [
+    { id: 'midnight', label: 'Midnight', background: '#000', surface: '#111', text: '#c4c4c4', accent: '#f2f2f2' },
+    { id: 'ocean', label: 'Ocean', background: '#07151c', surface: '#10252e', text: '#b9dbe3', accent: '#e5fbff' },
+    { id: 'ember', label: 'Ember', background: '#180b08', surface: '#2a1510', text: '#e8b8a4', accent: '#fff0e8' },
+    { id: 'forest', label: 'Forest', background: '#07130d', surface: '#102219', text: '#b9d6c1', accent: '#edfff2' },
+  ]
   const [time, setTime] = useState(getTime)
   const [showMinimal, setShowMinimal] = useState(false)
   const [activeMode, setActiveMode] = useState('clock')
   const [doNotDisturb, setDoNotDisturb] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [appearanceOpen, setAppearanceOpen] = useState(false)
+  const [theme, setTheme] = useState(() => localStorage.getItem('miss-minutes-theme') || 'midnight')
   const [dragging, setDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
   const pointerStart = useRef(null)
@@ -323,6 +331,10 @@ function App() {
     const timer = window.setInterval(() => setTime(getTime()), 1000)
     return () => window.clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem('miss-minutes-theme', theme)
+  }, [theme])
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -490,7 +502,15 @@ function App() {
   ]
 
   return (
-    <div className={`app-shell mode-${activeMode}${doNotDisturb ? ' is-do-not-disturb' : ''}`}>
+    <div
+      className={`app-shell mode-${activeMode}${doNotDisturb ? ' is-do-not-disturb' : ''}${appearanceOpen ? ' is-appearance-open' : ''}`}
+      style={{
+        '--theme-background': themes.find((item) => item.id === theme).background,
+        '--theme-surface': themes.find((item) => item.id === theme).surface,
+        '--theme-text': themes.find((item) => item.id === theme).text,
+        '--theme-accent': themes.find((item) => item.id === theme).accent,
+      }}
+    >
       {pages[activeMode]}
       <div className={`settings-menu${settingsOpen ? ' is-open' : ''}`}>
         <button
@@ -516,12 +536,29 @@ function App() {
               type="button"
               className="settings-option"
               role="menuitem"
-              disabled
-              title="Appearance settings coming soon"
+              aria-expanded={appearanceOpen}
+              onClick={() => setAppearanceOpen(!appearanceOpen)}
             >
               <img src="/appearance.png" alt="" />
             </button>
         </div>
+        {appearanceOpen && (
+          <div className="theme-picker" role="dialog" aria-label="Appearance presets">
+            {themes.map((item) => (
+              <button
+                type="button"
+                className={`theme-option${theme === item.id ? ' is-selected' : ''}`}
+                key={item.id}
+                aria-label={`Use ${item.label} theme`}
+                aria-pressed={theme === item.id}
+                onClick={() => setTheme(item.id)}
+              >
+                <span style={{ '--swatch-background': item.background, '--swatch-accent': item.accent }} />
+                <small>{item.label}</small>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <nav
         className="mode-nav"
