@@ -312,6 +312,10 @@ function App() {
     { id: 'ocean', label: 'Ocean', background: '#07151c', surface: '#10252e', text: '#b9dbe3', accent: '#e5fbff' },
     { id: 'ember', label: 'Ember', background: '#180b08', surface: '#2a1510', text: '#e8b8a4', accent: '#fff0e8' },
     { id: 'forest', label: 'Forest', background: '#07130d', surface: '#102219', text: '#b9d6c1', accent: '#edfff2' },
+    { id: 'blue', label: 'Blue', background: '#071426', surface: '#10243d', text: '#b9d8f2', accent: '#e8f5ff' },
+    { id: 'violet', label: 'Violet', background: '#150b25', surface: '#28153d', text: '#d8bff0', accent: '#f7edff' },
+    { id: 'rose', label: 'Rose', background: '#210c18', surface: '#391426', text: '#efbfd2', accent: '#fff0f6' },
+    { id: 'slate', label: 'Slate', background: '#111820', surface: '#202c39', text: '#c5d0dc', accent: '#f2f6fa' },
   ]
   const [time, setTime] = useState(getTime)
   const [showMinimal, setShowMinimal] = useState(false)
@@ -544,19 +548,23 @@ function App() {
         </div>
         {appearanceOpen && (
           <div className="theme-picker" role="dialog" aria-label="Appearance presets">
-            {themes.map((item) => (
+            {themes.flatMap((item) => [item, { ...item, id: `${item.id}-split` }]).map((item) => {
+              const baseId = item.id.replace('-split', '')
+              const baseTheme = themes.find((themeItem) => themeItem.id === baseId)
+              return (
               <button
                 type="button"
-                className={`theme-option${theme === item.id ? ' is-selected' : ''}`}
+                className={`theme-option${theme === item.id ? ' is-selected' : ''}${item.id.endsWith('-split') ? ' is-split' : ''}`}
                 key={item.id}
                 aria-label={`Use ${item.label} theme`}
-                aria-pressed={theme === item.id}
-                onClick={() => setTheme(item.id)}
+                aria-pressed={theme === item.id || theme === baseId}
+                onClick={() => setTheme(baseId)}
               >
-                <span style={{ '--swatch-background': item.background, '--swatch-accent': item.accent }} />
+                <span style={{ '--swatch-background': item.background, '--swatch-accent': baseTheme.accent }} />
                 <small>{item.label}</small>
               </button>
-            ))}
+              )
+            })}
           </div>
         )}
       </div>
