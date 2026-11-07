@@ -20,6 +20,14 @@
   z-index: 25;
   top: max(20px, calc(env(safe-area-inset-top) + 10px));
   right: max(20px, calc(env(safe-area-inset-right) + 10px));
+  width: 42px;
+  height: 42px;
+  transition: width .45s cubic-bezier(.22, 1, .36, 1), height .45s cubic-bezier(.22, 1, .36, 1);
+}
+
+.settings-menu.is-open {
+  width: 218px;
+  height: 58px;
 }
 
 .settings-toggle {
@@ -58,14 +66,22 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 218px;
-  height: 58px;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   padding: 6px 54px 6px 10px;
   border: 1px solid #eee;
   border-radius: 32px;
   background: #202020;
   box-shadow: 0 10px 24px rgb(0 0 0 / 35%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+.settings-menu.is-open .settings-popover {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .settings-option {
@@ -81,6 +97,14 @@
   background: transparent;
   font: 400 34px/1 Arial, sans-serif;
   cursor: pointer;
+  opacity: 0;
+  transform: scale(.7);
+  transition: opacity .3s ease .08s, transform .45s cubic-bezier(.22, 1, .36, 1) .08s, background .2s ease, color .2s ease;
+}
+
+.settings-menu.is-open .settings-option {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .settings-option:hover:not(:disabled),
@@ -108,8 +132,8 @@
 .settings-menu.is-open .settings-toggle {
   position: absolute;
   z-index: 2;
-  top: 6px;
-  right: 6px;
+  top: 8px;
+  right: 8px;
   border-color: transparent;
   background: transparent;
   box-shadow: none;
@@ -1153,5 +1177,9 @@
   .settings-menu {
     top: max(14px, calc(env(safe-area-inset-top) + 6px));
     right: max(14px, calc(env(safe-area-inset-right) + 6px));
+  }
+
+  .settings-menu.is-open {
+    width: min(218px, calc(100vw - 28px));
   }
 }

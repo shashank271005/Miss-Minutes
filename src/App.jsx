@@ -502,8 +502,7 @@ function App() {
         >
           <img src="/setting.png" alt="" />
         </button>
-        {settingsOpen && (
-          <div className="settings-popover" role="menu">
+        <div className="settings-popover" role="menu" aria-hidden={!settingsOpen}>
             <button
               type="button"
               className="settings-option"
@@ -522,8 +521,7 @@ function App() {
             >
               <img src="/appearance.png" alt="" />
             </button>
-          </div>
-        )}
+        </div>
       </div>
       <nav
         className="mode-nav"
