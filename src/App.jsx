@@ -511,7 +511,7 @@ function App() {
               aria-pressed={doNotDisturb}
               onClick={toggleDoNotDisturb}
             >
-              <span className="dnd-symbol" aria-hidden="true">☾</span>
+              <img src="/dnd.png" alt="" />
             </button>
             <button
               type="button"
@@ -520,7 +520,7 @@ function App() {
               disabled
               title="Appearance settings coming soon"
             >
-              <Icon name="palette" />
+              <img src="/appearance.png" alt="" />
             </button>
           </div>
         )}

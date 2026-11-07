@@ -94,14 +94,10 @@
   cursor: not-allowed;
 }
 
-.settings-option svg {
+.settings-option img {
   width: 38px;
   height: 38px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.7;
+  object-fit: contain;
 }
 
 .dnd-symbol {
