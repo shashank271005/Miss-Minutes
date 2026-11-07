@@ -640,16 +640,19 @@
   position: absolute;
   right: clamp(18px, 3vw, 48px);
   bottom: 18%;
-  color: #555;
-  font: 600 10px / 1 Arial, sans-serif;
-  letter-spacing: .14em;
-  white-space: nowrap;
+  display: flex;
+  gap: 5px;
 }
 
 .clock-style-hint span {
-  margin-left: 5px;
-  color: #777;
-  font-size: 13px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #444;
+}
+
+.clock-style-hint .is-active {
+  background: #999;
 }
 
 .clock-view:first-child {
