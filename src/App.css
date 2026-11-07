@@ -26,7 +26,7 @@
 }
 
 .settings-menu.is-open {
-  width: 218px;
+  width: 132px;
   height: 58px;
 }
 
@@ -114,11 +114,7 @@
 }
 
 .settings-option:first-child {
-  left: 16px;
-}
-
-.settings-option:nth-child(2) {
-  left: 86px;
+  left: 10px;
 }
 
 .settings-menu.is-open .settings-option {
@@ -155,7 +151,7 @@
   position: absolute;
   z-index: 2;
   top: 8px;
-  right: 16px;
+  right: 10px;
   border-color: transparent;
   background: transparent;
   box-shadow: none;
@@ -1264,6 +1260,6 @@
   }
 
   .settings-menu.is-open {
-    width: min(218px, calc(100vw - 28px));
+    width: min(132px, calc(100vw - 28px));
   }
 }
