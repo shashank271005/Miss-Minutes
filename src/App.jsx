@@ -492,7 +492,7 @@ function App() {
   return (
     <div className={`app-shell mode-${activeMode}${doNotDisturb ? ' is-do-not-disturb' : ''}`}>
       {pages[activeMode]}
-      <div className="settings-menu">
+      <div className={`settings-menu${settingsOpen ? ' is-open' : ''}`}>
         <button
           type="button"
           className="settings-toggle"
@@ -512,7 +512,6 @@ function App() {
               onClick={toggleDoNotDisturb}
             >
               <span className="dnd-symbol" aria-hidden="true">☾</span>
-              <span>Do Not Disturb</span>
             </button>
             <button
               type="button"
@@ -522,7 +521,6 @@ function App() {
               title="Appearance settings coming soon"
             >
               <Icon name="palette" />
-              <span>Appearance</span>
             </button>
           </div>
         )}

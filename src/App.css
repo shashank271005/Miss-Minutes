@@ -53,57 +53,74 @@
 
 .settings-popover {
   position: absolute;
-  top: 44px;
+  top: 0;
   right: 0;
-  display: grid;
-  gap: 4px;
-  width: 172px;
-  padding: 6px;
-  border: 1px solid #252525;
-  border-radius: 12px;
-  background: rgb(10 10 10 / 96%);
-  box-shadow: 0 10px 24px rgb(0 0 0 / 45%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 218px;
+  height: 58px;
+  box-sizing: border-box;
+  padding: 6px 54px 6px 10px;
+  border: 1px solid #eee;
+  border-radius: 32px;
+  background: #202020;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 35%);
 }
 
 .settings-option {
   display: flex;
   align-items: center;
-  gap: 9px;
-  width: 100%;
-  padding: 9px 10px;
+  justify-content: center;
+  width: 58px;
+  height: 46px;
+  padding: 0;
   border: 0;
-  border-radius: 8px;
-  color: #aaa;
+  border-radius: 50%;
+  color: #eee;
   background: transparent;
-  font: 400 11px/1 Arial, sans-serif;
-  text-align: left;
+  font: 400 34px/1 Arial, sans-serif;
   cursor: pointer;
 }
 
 .settings-option:hover:not(:disabled),
 .settings-option[aria-pressed='true'] {
-  color: #eee;
-  background: #1b1b1b;
+  color: #fff;
+  background: #333;
 }
 
 .settings-option:disabled {
-  color: #555;
+  color: #eee;
   cursor: not-allowed;
 }
 
 .settings-option svg {
-  width: 16px;
-  height: 16px;
+  width: 38px;
+  height: 38px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 1.5;
+  stroke-width: 1.7;
 }
 
 .dnd-symbol {
   display: block;
   transform: translateY(-1px);
+}
+
+.settings-menu.is-open .settings-toggle {
+  position: absolute;
+  z-index: 2;
+  top: 6px;
+  right: 6px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.settings-menu.is-open .settings-toggle:hover {
+  transform: none;
 }
 
 .is-do-not-disturb .settings-toggle {
