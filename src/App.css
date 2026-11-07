@@ -323,12 +323,12 @@
 
 .wheel-picker::before {
   top: 0;
-  background: linear-gradient(to bottom, #000 8%, transparent);
+  background: linear-gradient(to bottom, var(--theme-background, #000) 8%, transparent);
 }
 
 .wheel-picker::after {
   bottom: 28px;
-  background: linear-gradient(to top, #000 8%, transparent);
+  background: linear-gradient(to top, var(--theme-background, #000) 8%, transparent);
 }
 
 .wheel-value {
