@@ -119,7 +119,7 @@
   height: clamp(82px, 11vw, 116px);
   padding: 0;
   border: 0;
-  color: #242424;
+  color: #484848;
   background: transparent;
   font: 400 clamp(52px, 7vw, 78px)/1 Arial, sans-serif;
   cursor: pointer;
@@ -134,14 +134,14 @@
 }
 
 .wheel-position-0 {
-  opacity: .22;
-  filter: blur(1px);
+  opacity: .34;
+  filter: blur(.8px);
   transform: rotateX(62deg) scale(.68) translateY(30px) translateZ(-45px);
 }
 
 .wheel-position-1 {
-  opacity: .48;
-  filter: blur(.3px);
+  opacity: .66;
+  filter: blur(.2px);
   transform: rotateX(38deg) scale(.84) translateY(13px) translateZ(-12px);
 }
 
@@ -152,14 +152,14 @@
 }
 
 .wheel-position-3 {
-  opacity: .48;
-  filter: blur(.3px);
+  opacity: .66;
+  filter: blur(.2px);
   transform: rotateX(-38deg) scale(.84) translateY(-13px) translateZ(-12px);
 }
 
 .wheel-position-4 {
-  opacity: .22;
-  filter: blur(1px);
+  opacity: .34;
+  filter: blur(.8px);
   transform: rotateX(-62deg) scale(.68) translateY(-30px) translateZ(-45px);
 }
 
