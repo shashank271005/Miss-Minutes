@@ -899,6 +899,40 @@
   100% { transform: translateY(0); opacity: 1; filter: blur(0); }
 }
 
+@media (min-width: 768px) and (max-width: 1199px) {
+  .clock-stage {
+    --card-size: min(40vw, 52vh);
+    padding-inline: 20px;
+  }
+
+  .clock {
+    gap: clamp(24px, 3vw, 56px);
+  }
+
+  .mode-page {
+    padding-right: 32px;
+    padding-left: 32px;
+    padding-bottom: 172px;
+  }
+
+  .timer-picker {
+    gap: clamp(20px, 5vw, 56px);
+  }
+
+  .wheel-picker {
+    width: clamp(150px, 18vw, 180px);
+  }
+
+  .wheel-value {
+    height: clamp(92px, 10vw, 112px);
+    font-size: clamp(56px, 6.5vw, 76px);
+  }
+
+  .wheel-label {
+    bottom: 132px;
+  }
+}
+
 @media (max-width: 480px) {
   .clock-stage { padding: 12px; }
   .clock { gap: 8px; }
