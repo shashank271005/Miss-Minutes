@@ -494,11 +494,6 @@ function App() {
       >
         <span className="dnd-symbol" aria-hidden="true">☾</span>
       </button>
-      {doNotDisturb && (
-        <p className="dnd-notice" role="status">
-          Fullscreen is on. To silence app notifications, turn on Focus in Control Center.
-        </p>
-      )}
       <nav
         className="mode-nav"
         aria-label="Clock modes"

@@ -45,23 +45,6 @@
   transform: translateY(-1px);
 }
 
-.dnd-notice {
-  position: fixed;
-  z-index: 24;
-  top: max(60px, calc(env(safe-area-inset-top) + 48px));
-  right: max(16px, env(safe-area-inset-right));
-  width: min(280px, calc(100vw - 32px));
-  box-sizing: border-box;
-  margin: 0;
-  padding: 10px 12px;
-  border: 1px solid #252525;
-  border-radius: 10px;
-  color: #999;
-  background: rgb(10 10 10 / 94%);
-  font: 400 11px/1.35 Arial, sans-serif;
-  text-align: right;
-}
-
 .is-do-not-disturb .dnd-toggle {
   color: #eee;
 }
