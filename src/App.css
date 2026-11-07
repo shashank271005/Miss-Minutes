@@ -638,10 +638,12 @@
 
 .clock-style-hint {
   position: absolute;
-  right: clamp(18px, 3vw, 48px);
-  bottom: 18%;
+  top: -13px;
+  left: 50%;
   display: flex;
   gap: 5px;
+  z-index: 2;
+  transform: translateX(-50%);
 }
 
 .clock-style-hint span {
@@ -900,7 +902,6 @@
 @media (max-width: 480px) {
   .clock-stage { padding: 12px; }
   .clock { gap: 8px; }
-  .clock-style-hint { right: 12px; bottom: 15%; }
   .minimal-clock { font-size: clamp(42px, 14vw, 90px); }
   .minimal-clock b { margin-inline: 8px; }
   .time-panel {

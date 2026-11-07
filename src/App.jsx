@@ -425,10 +425,6 @@ function App() {
               <span className="separator" aria-hidden="true">:</span>
               <TimePanel value={time.minutes} label="Minutes" />
             </section>
-            <span className="clock-style-hint" aria-hidden="true">
-              <span className="is-active" />
-              <span />
-            </span>
           </div>
           <div className="clock-view">
             <MinimalClock time={time} />
@@ -464,6 +460,12 @@ function App() {
             onClick={() => setActiveMode(id)}
           >
             <Icon name={id} />
+            {id === 'clock' && (
+              <span className="clock-style-hint" aria-hidden="true">
+                <span className={!showMinimal ? 'is-active' : ''} />
+                <span className={showMinimal ? 'is-active' : ''} />
+              </span>
+            )}
             <span>{label}</span>
           </button>
         ))}
