@@ -112,6 +112,12 @@ function Icon({ name }) {
         <path d="M12 7v5l3 2" />
       </>
     ),
+    world: (
+      <>
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M3.8 12h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5s-1.1 6.2-3.3 8.5c-2.2-2.3-3.3-5.1-3.3-8.5S9.8 5.8 12 3.5ZM4.8 7.5h14.4M4.8 16.5h14.4" />
+      </>
+    ),
     timer: (
       <>
         <path d="M8 3h8M12 3v3M7 7l10 10M17 7 7 17" />
@@ -303,6 +309,77 @@ function TimerPage() {
         </button>
       </div>
     </section>
+  )
+}
+
+function WorldClock() {
+  const cities = [
+    { name: 'San Francisco', zone: 'America/Los_Angeles' },
+    { name: 'New York', zone: 'America/New_York' },
+    { name: 'London', zone: 'Europe/London' },
+    { name: 'Paris', zone: 'Europe/Paris' },
+    { name: 'Moscow', zone: 'Europe/Moscow' },
+    { name: 'Beijing', zone: 'Asia/Shanghai' },
+    { name: 'Tokyo', zone: 'Asia/Tokyo' },
+    { name: 'Sydney', zone: 'Australia/Sydney' },
+  ]
+  const [now, setNow] = useState(0)
+
+  useEffect(() => {
+    setNow(Date.now())
+    const timer = window.setInterval(() => setNow(Date.now()), 1000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  const getCityTime = (city) => {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: city.zone,
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    }).formatToParts(now)
+    const hour = Number(parts.find((part) => part.type === 'hour').value)
+    const minute = Number(parts.find((part) => part.type === 'minute').value)
+    const period = parts.find((part) => part.type === 'dayPeriod').value
+    return {
+      hour,
+      minute,
+      label: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')} ${period}`,
+    }
+  }
+
+  return (
+    <main className="world-clock-page" aria-label="World clock">
+      <div className="world-map" aria-hidden="true">
+        <span className="world-map-line line-one" />
+        <span className="world-map-line line-two" />
+        <span className="world-map-line line-three" />
+        <span className="world-map-continent continent-one" />
+        <span className="world-map-continent continent-two" />
+        <span className="world-map-continent continent-three" />
+      </div>
+      <div className="world-clock-cards">
+        {cities.map((city) => {
+          const cityTime = getCityTime(city)
+          const hourAngle = ((cityTime.hour % 12) + cityTime.minute / 60) * 30
+          const minuteAngle = cityTime.minute * 6
+          return (
+            <article className="world-city-card" key={city.zone}>
+              <div className="world-clock-face" aria-hidden="true">
+                <span className="clock-hand clock-hour" style={{ transform: `rotate(${hourAngle}deg)` }} />
+                <span className="clock-hand clock-minute" style={{ transform: `rotate(${minuteAngle}deg)` }} />
+                <span className="clock-center" />
+                {[...Array(12)].map((_, index) => (
+                  <i key={index} style={{ transform: `rotate(${index * 30}deg)` }}><b /></i>
+                ))}
+              </div>
+              <strong>{city.name}</strong>
+              <span>{cityTime.label}</span>
+            </article>
+          )
+        })}
+      </div>
+    </main>
   )
 }
 
@@ -501,12 +578,14 @@ function App() {
     ),
     timer: <TimerPage />,
     stopwatch: <StopwatchPage />,
+    world: <WorldClock />,
   }
 
   const modes = [
     { id: 'timer', label: 'Timer' },
     { id: 'stopwatch', label: 'Stopwatch' },
     { id: 'clock', label: 'Clock' },
+    { id: 'world', label: 'World' },
   ]
 
   return (

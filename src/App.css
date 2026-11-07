@@ -238,6 +238,184 @@
   color: #c4c4c4;
 }
 
+.world-clock-page {
+  position: relative;
+  min-height: 100svh;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 32px 0 124px;
+  background: #000;
+}
+
+.world-map {
+  position: absolute;
+  inset: 0 0 270px;
+  overflow: hidden;
+  opacity: .8;
+  background:
+    linear-gradient(rgb(255 255 255 / 5%) 1px, transparent 1px) 0 0 / 100% 58px,
+    linear-gradient(90deg, rgb(255 255 255 / 5%) 1px, transparent 1px) 0 0 / 74px 100%;
+}
+
+.world-map-line {
+  position: absolute;
+  display: block;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 50%;
+}
+
+.line-one {
+  width: 68vw;
+  height: 48vw;
+  left: 34%;
+  top: 10%;
+  transform: rotate(-15deg);
+}
+
+.line-two {
+  width: 52vw;
+  height: 38vw;
+  left: -12%;
+  top: 5%;
+  transform: rotate(12deg);
+}
+
+.line-three {
+  width: 44vw;
+  height: 32vw;
+  right: -14%;
+  top: 12%;
+  transform: rotate(-18deg);
+}
+
+.world-map-continent {
+  position: absolute;
+  display: block;
+  background: rgb(255 255 255 / 13%);
+  filter: blur(1px);
+}
+
+.continent-one {
+  width: 22vw;
+  height: 12vw;
+  left: 24%;
+  top: 18%;
+  border-radius: 42% 58% 38% 62%;
+  transform: rotate(18deg);
+}
+
+.continent-two {
+  width: 18vw;
+  height: 14vw;
+  left: 48%;
+  top: 13%;
+  border-radius: 58% 42% 60% 40%;
+  transform: rotate(-12deg);
+}
+
+.continent-three {
+  width: 15vw;
+  height: 9vw;
+  right: 8%;
+  top: 24%;
+  border-radius: 60% 40% 45% 55%;
+}
+
+.world-clock-cards {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 24px;
+  left: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(180px, 220px);
+  gap: 20px;
+  overflow-x: auto;
+  padding: 0 24px 12px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.world-clock-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.world-city-card {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 22px 12px 16px;
+  border-radius: 24px;
+  color: #eee;
+  background: #171717;
+  scroll-snap-align: start;
+}
+
+.world-clock-face {
+  position: relative;
+  width: 126px;
+  height: 126px;
+  border-radius: 50%;
+  background: #050505;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%);
+}
+
+.world-clock-face i {
+  position: absolute;
+  inset: 7px;
+  display: block;
+}
+
+.world-clock-face i b {
+  display: block;
+  width: 2px;
+  height: 7px;
+  margin: 0 auto;
+  background: currentColor;
+  transform-origin: 1px 56px;
+}
+
+.clock-hand {
+  position: absolute;
+  z-index: 2;
+  bottom: 50%;
+  left: 50%;
+  width: 2px;
+  border-radius: 2px;
+  background: #eee;
+  transform-origin: 50% 100%;
+}
+
+.clock-hour {
+  height: 34px;
+}
+
+.clock-minute {
+  height: 46px;
+  background: #aaa;
+}
+
+.clock-center {
+  position: absolute;
+  z-index: 3;
+  top: calc(50% - 3px);
+  left: calc(50% - 3px);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f90;
+}
+
+.world-city-card strong {
+  font: 400 14px/1.1 Arial, sans-serif;
+}
+
+.world-city-card > span {
+  color: #999;
+  font: 400 12px/1 Arial, sans-serif;
+}
+
 .mode-page > svg {
   width: 42px;
   height: 42px;
