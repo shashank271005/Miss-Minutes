@@ -522,7 +522,10 @@ function App() {
           className="settings-toggle"
           aria-label="Open settings"
           aria-expanded={settingsOpen}
-          onClick={() => setSettingsOpen(!settingsOpen)}
+          onClick={() => {
+            setSettingsOpen(!settingsOpen)
+            setAppearanceOpen(false)
+          }}
         >
           <img src="/setting.png" alt="" />
         </button>
