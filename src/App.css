@@ -15,11 +15,14 @@
   color: #c4c4c4;
 }
 
-.dnd-toggle {
+.settings-menu {
   position: fixed;
   z-index: 25;
   top: max(16px, env(safe-area-inset-top));
   right: max(16px, env(safe-area-inset-right));
+}
+
+.settings-toggle {
   width: 36px;
   height: 36px;
   padding: 0;
@@ -33,11 +36,71 @@
   transition: color .2s ease, border-color .2s ease, opacity .2s ease;
 }
 
-.dnd-toggle:hover,
-.dnd-toggle[aria-pressed='true'] {
+.settings-toggle:hover,
+.settings-toggle[aria-expanded='true'] {
   border-color: #555;
   color: #ddd;
   opacity: 1;
+}
+
+.settings-toggle svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.settings-popover {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  display: grid;
+  gap: 4px;
+  width: 172px;
+  padding: 6px;
+  border: 1px solid #252525;
+  border-radius: 12px;
+  background: rgb(10 10 10 / 96%);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 45%);
+}
+
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  color: #aaa;
+  background: transparent;
+  font: 400 11px/1 Arial, sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.settings-option:hover:not(:disabled),
+.settings-option[aria-pressed='true'] {
+  color: #eee;
+  background: #1b1b1b;
+}
+
+.settings-option:disabled {
+  color: #555;
+  cursor: not-allowed;
+}
+
+.settings-option svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
 }
 
 .dnd-symbol {
@@ -45,7 +108,7 @@
   transform: translateY(-1px);
 }
 
-.is-do-not-disturb .dnd-toggle {
+.is-do-not-disturb .settings-toggle {
   color: #eee;
 }
 
@@ -1076,7 +1139,7 @@
     transform: translateX(calc(var(--active-index) * 74px));
   }
 
-  .dnd-toggle {
+  .settings-menu {
     top: max(10px, env(safe-area-inset-top));
     right: max(10px, env(safe-area-inset-right));
   }

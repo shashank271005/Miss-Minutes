@@ -142,6 +142,12 @@ function Icon({ name }) {
         <path d="M9 20h6M12 17v3" />
       </>
     ),
+    settings: (
+      <>
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.4 1.4-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-2v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.4-1.4.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H7v-2h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.4-1.4.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V5h2v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.4 1.4-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v2h-.2a1.7 1.7 0 0 0-1.6 1Z" />
+      </>
+    ),
   }
 
   return (
@@ -305,6 +311,7 @@ function App() {
   const [showMinimal, setShowMinimal] = useState(false)
   const [activeMode, setActiveMode] = useState('clock')
   const [doNotDisturb, setDoNotDisturb] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
   const pointerStart = useRef(null)
@@ -485,15 +492,41 @@ function App() {
   return (
     <div className={`app-shell mode-${activeMode}${doNotDisturb ? ' is-do-not-disturb' : ''}`}>
       {pages[activeMode]}
-      <button
-        type="button"
-        className="dnd-toggle"
-        aria-label={doNotDisturb ? 'Turn off Do Not Disturb mode' : 'Turn on Do Not Disturb mode'}
-        aria-pressed={doNotDisturb}
-        onClick={toggleDoNotDisturb}
-      >
-        <span className="dnd-symbol" aria-hidden="true">☾</span>
-      </button>
+      <div className="settings-menu">
+        <button
+          type="button"
+          className="settings-toggle"
+          aria-label="Open settings"
+          aria-expanded={settingsOpen}
+          onClick={() => setSettingsOpen(!settingsOpen)}
+        >
+          <Icon name="settings" />
+        </button>
+        {settingsOpen && (
+          <div className="settings-popover" role="menu">
+            <button
+              type="button"
+              className="settings-option"
+              role="menuitem"
+              aria-pressed={doNotDisturb}
+              onClick={toggleDoNotDisturb}
+            >
+              <span className="dnd-symbol" aria-hidden="true">☾</span>
+              <span>Do Not Disturb</span>
+            </button>
+            <button
+              type="button"
+              className="settings-option"
+              role="menuitem"
+              disabled
+              title="Appearance settings coming soon"
+            >
+              <Icon name="palette" />
+              <span>Appearance</span>
+            </button>
+          </div>
+        )}
+      </div>
       <nav
         className="mode-nav"
         aria-label="Clock modes"
