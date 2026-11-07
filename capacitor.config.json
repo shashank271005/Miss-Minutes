@@ -1,0 +1,8 @@
+{
+  "appId": "com.missminutes.app",
+  "appName": "Miss Minutes",
+  "webDir": "dist",
+  "server": {
+    "iosScheme": "https"
+  }
+}
