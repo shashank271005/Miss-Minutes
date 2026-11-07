@@ -45,14 +45,10 @@
   transform: translateY(-1px);
 }
 
-.settings-toggle svg {
+.settings-toggle img {
   width: 20px;
   height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.7;
+  object-fit: contain;
 }
 
 .settings-popover {

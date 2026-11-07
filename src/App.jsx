@@ -500,7 +500,7 @@ function App() {
           aria-expanded={settingsOpen}
           onClick={() => setSettingsOpen(!settingsOpen)}
         >
-          <Icon name="settings" />
+          <img src="/setting.png" alt="" />
         </button>
         {settingsOpen && (
           <div className="settings-popover" role="menu">
