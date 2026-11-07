@@ -1302,6 +1302,63 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
+  .world-clock-page {
+    padding-bottom: 150px;
+  }
+
+  .world-map-image,
+  .world-map-markers {
+    height: min(100%, 50vw);
+  }
+
+  .world-map-label strong {
+    font-size: 13px;
+  }
+
+  .world-map-label small {
+    font-size: 12px;
+  }
+
+  .world-map-dot {
+    width: 10px;
+    height: 10px;
+    flex-basis: 10px;
+  }
+
+  .world-clock-cards {
+    bottom: 116px;
+    gap: 14px;
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .world-city-card {
+    min-width: 132px;
+    padding: 10px 7px 9px;
+  }
+
+  .world-clock-face {
+    width: 76px;
+    height: 76px;
+  }
+
+  .world-clock-face i {
+    inset: 4px;
+  }
+
+  .world-clock-face i b {
+    height: 4px;
+    transform-origin: 1px 34px;
+  }
+
+  .clock-hour {
+    height: 20px;
+  }
+
+  .clock-minute {
+    height: 29px;
+  }
+
   .clock-stage {
     --card-size: min(40vw, 52vh);
     padding-inline: 20px;
@@ -1360,6 +1417,81 @@
 }
 
 @media (max-width: 375px) {
+  .world-clock-page {
+    padding-bottom: 112px;
+  }
+
+  .world-map-image,
+  .world-map-markers {
+    height: min(100%, 50vw);
+  }
+
+  .world-map-label {
+    gap: 1px;
+  }
+
+  .world-map-label strong {
+    font-size: 8px;
+  }
+
+  .world-map-label small {
+    font-size: 8px;
+  }
+
+  .world-map-dot {
+    width: 6px;
+    height: 6px;
+    flex-basis: 6px;
+    margin-top: 2px;
+  }
+
+  .world-clock-cards {
+    bottom: 88px;
+    gap: 7px;
+    padding: 0 10px 6px;
+  }
+
+  .world-city-card {
+    min-width: 94px;
+    gap: 3px;
+    padding: 6px 4px 5px;
+    border-radius: 11px;
+  }
+
+  .world-clock-face {
+    width: 56px;
+    height: 56px;
+  }
+
+  .world-clock-face i {
+    inset: 3px;
+  }
+
+  .world-clock-face i b {
+    width: 1px;
+    height: 3px;
+    transform-origin: 1px 25px;
+  }
+
+  .clock-hour {
+    width: 1px;
+    height: 15px;
+  }
+
+  .clock-minute {
+    width: 1px;
+    height: 21px;
+  }
+
+  .world-clock-card strong,
+  .world-city-card strong {
+    font-size: 9px;
+  }
+
+  .world-city-card > span {
+    font-size: 8px;
+  }
+
   .clock-stage {
     --card-size: min(39vw, 42vh);
     padding-inline: 8px;
