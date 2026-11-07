@@ -309,6 +309,7 @@ function App() {
   const pointerStart = useRef(null)
   const audioContext = useRef(null)
   const soundEnabled = useRef(false)
+  const stopTickSound = useRef(() => {})
 
   useEffect(() => {
     const timer = window.setInterval(() => setTime(getTime()), 1000)
@@ -316,8 +317,9 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (!showMinimal || !soundEnabled.current || !audioContext.current) return undefined
+    if (activeMode !== 'clock' || !showMinimal || !soundEnabled.current || !audioContext.current) return undefined
 
+    stopTickSound.current()
     const context = audioContext.current
     const noise = context.createBufferSource()
     const noiseBuffer = context.createBuffer(1, context.sampleRate * 0.045, context.sampleRate)
@@ -349,13 +351,20 @@ function App() {
     oscillator.start(startTime)
     oscillator.stop(startTime + 0.045)
 
-    return () => {
+    stopTickSound.current = () => {
+      noise.stop()
+      oscillator.stop()
       noise.disconnect()
       filter.disconnect()
       oscillator.disconnect()
       gain.disconnect()
     }
-  }, [showMinimal, time.seconds])
+
+    return () => {
+      stopTickSound.current()
+      stopTickSound.current = () => {}
+    }
+  }, [activeMode, showMinimal, time.seconds])
 
   const handlePointerDown = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return
