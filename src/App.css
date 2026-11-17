@@ -1008,7 +1008,8 @@
   position: fixed;
   z-index: 20;
   left: 50%;
-  bottom: 24px;
+  --nav-bottom: 24px;
+  bottom: var(--nav-bottom);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1019,6 +1020,21 @@
   box-shadow: 0 10px 30px rgb(0 0 0 / 45%);
   transform: translateX(-50%);
   backdrop-filter: none;
+  transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mode-nav:not(:hover):not(:focus-within) {
+    transform: translate(-50%, calc(100% + var(--nav-bottom) - 6px));
+    transition-delay: 10s;
+  }
+
+  .mode-nav:hover,
+  .mode-nav:focus-within {
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
+  }
 }
 
 .mode-nav::before {
@@ -1714,7 +1730,7 @@
   }
 
   .mode-nav {
-    bottom: 14px;
+    --nav-bottom: 14px;
     gap: 4px;
     padding: 6px;
   }
