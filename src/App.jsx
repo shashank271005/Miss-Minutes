@@ -188,11 +188,41 @@ function StopwatchPage() {
   )
 }
 
-function formatTimer(seconds) {
-  const hours = String(Math.floor(seconds / 3600)).padStart(2, '0')
-  const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')
-  const remainingSeconds = String(seconds % 60).padStart(2, '0')
-  return `${hours}:${minutes}:${remainingSeconds}`
+const SEGMENT_MAP = {
+  0: ['a', 'b', 'c', 'd', 'e', 'f'],
+  1: ['b', 'c'],
+  2: ['a', 'b', 'g', 'e', 'd'],
+  3: ['a', 'b', 'c', 'd', 'g'],
+  4: ['f', 'g', 'b', 'c'],
+  5: ['a', 'f', 'g', 'c', 'd'],
+  6: ['a', 'f', 'g', 'e', 'c', 'd'],
+  7: ['a', 'b', 'c'],
+  8: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+  9: ['a', 'b', 'c', 'd', 'f', 'g'],
+}
+
+function SegmentDigit({ value }) {
+  const activeSegments = SEGMENT_MAP[value] || []
+  return (
+    <span className="segment-digit" aria-hidden="true">
+      {['a', 'b', 'c', 'd', 'e', 'f', 'g'].map((segment) => (
+        <span className={`segment segment-${segment}${activeSegments.includes(segment) ? ' is-on' : ''}`} key={segment} />
+      ))}
+    </span>
+  )
+}
+
+function SegmentGroup({ value, label }) {
+  return (
+    <div className="timer-unit">
+      <div className="timer-digits">
+        {String(value).padStart(2, '0').split('').map((digit, index) => (
+          <SegmentDigit value={digit} key={`${label}-${index}`} />
+        ))}
+      </div>
+      <span className="timer-unit-label">{label}</span>
+    </div>
+  )
 }
 
 function WheelPicker({ value, max, label, onChange }) {
@@ -218,7 +248,7 @@ function WheelPicker({ value, max, label, onChange }) {
 
 function TimerPage() {
   const [duration, setDuration] = useState(15 * 60)
-  const [remaining, setRemaining] = useState(15 * 60)
+  const [remainingMs, setRemainingMs] = useState(15 * 60 * 1000)
   const [running, setRunning] = useState(false)
   const [started, setStarted] = useState(false)
   const endSound = useRef(new Audio('/timer end.mp3'))
@@ -227,8 +257,8 @@ function TimerPage() {
   useEffect(() => {
     if (!running) return undefined
     const timer = window.setInterval(() => {
-      setRemaining((value) => {
-        if (value <= 1) {
+      setRemainingMs((value) => {
+        if (value <= 50) {
           setRunning(false)
           if (!soundPlayed.current) {
             soundPlayed.current = true
@@ -239,9 +269,9 @@ function TimerPage() {
           }
           return 0
         }
-        return value - 1
+        return value - 50
       })
-    }, 1000)
+    }, 50)
     return () => window.clearInterval(timer)
   }, [running])
 
@@ -257,13 +287,13 @@ function TimerPage() {
         ? values.hours * 3600 + Number(value) * 60 + values.seconds
         : values.hours * 3600 + values.minutes * 60 + Number(value)
     setDuration(nextDuration)
-    setRemaining(nextDuration)
+    setRemainingMs(nextDuration * 1000)
   }
 
   const reset = () => {
     setRunning(false)
     setStarted(false)
-    setRemaining(duration)
+    setRemainingMs(duration * 1000)
   }
 
   if (!started) {
@@ -285,16 +315,25 @@ function TimerPage() {
     )
   }
 
-  const progress = duration ? remaining / duration : 0
+  const totalSeconds = Math.ceil(remainingMs / 1000)
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
+  const milliseconds = Math.floor((remainingMs % 1000) / 10)
   return (
     <section
       className="timer-stage"
     >
       <div className="mode-page timer-page timer-running">
-        <div className="timer-ring" style={{ '--progress': `${progress * 360}deg` }}>
-          <div className="timer-readout">
-            <h1 id="timer-title">{formatTimer(remaining)}</h1>
-            <p>Total {Math.ceil(duration / 60)} minutes</p>
+        <div className="timer-readout">
+          <div className="timer-display" id="timer-title" aria-label={`${hours} hours ${minutes} minutes ${seconds} seconds`}>
+            <SegmentGroup value={hours} label="HR" />
+            <span className="timer-separator" aria-hidden="true">:</span>
+            <SegmentGroup value={minutes} label="MIN" />
+            <span className="timer-separator" aria-hidden="true">:</span>
+            <SegmentGroup value={seconds} label="SEC" />
+            <span className="timer-separator" aria-hidden="true">:</span>
+            <SegmentGroup value={milliseconds} label="MS" />
           </div>
         </div>
         <div className="timer-actions">
