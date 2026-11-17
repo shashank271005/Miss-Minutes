@@ -1,6 +1,6 @@
 .clock-stage {
   height: 100svh;
-  --card-size: min(42vw, 60vh);
+  --card-size: min(46vw, 66vh);
   overflow: hidden;
   padding: 22px 0;
   box-sizing: border-box;
@@ -1224,7 +1224,7 @@
   position: absolute;
   z-index: 10;
   inset: calc(var(--card-size) * .495) 0 auto;
-  height: 1px;
+  height: 5px;
   background: #050505;
   box-shadow: 0 1px 0 rgb(255 255 255 / 5%);
 }
@@ -1484,7 +1484,7 @@
   }
 
   .clock-stage {
-    --card-size: min(40vw, 52vh);
+    --card-size: min(42vw, 56vh);
     padding-inline: 20px;
   }
 
@@ -1522,21 +1522,21 @@
   .minimal-clock { font-size: clamp(42px, 14vw, 90px); }
   .minimal-clock b { margin-inline: 8px; }
   .time-panel {
-    width: min(45vw, 220px);
-    height: calc(min(45vw, 220px) * .973);
-    flex-basis: min(45vw, 220px);
+    width: min(48vw, 240px);
+    height: calc(min(48vw, 240px) * .973);
+    flex-basis: min(48vw, 240px);
     border-radius: 15px;
   }
-  .time-panel::after { inset: calc(min(45vw, 220px) * .482) 0 auto; }
+  .time-panel::after { inset: calc(min(48vw, 240px) * .482) 0 auto; }
   .digits { gap: 4px; }
   .digit {
-    width: calc((min(45vw, 220px) - 4px) / 2);
-    height: calc(min(45vw, 220px) * .973);
-    font-size: clamp(80px, 38vw, 211px);
-    line-height: calc(min(45vw, 220px) * .973);
+    width: calc((min(48vw, 240px) - 4px) / 2);
+    height: calc(min(48vw, 240px) * .973);
+    font-size: clamp(80px, 40vw, 230px);
+    line-height: calc(min(48vw, 240px) * .973);
   }
   .digit-half, .digit-flap { height: 50%; }
-  .digit-half-top, .digit-flap-top { line-height: calc(min(45vw, 220px) * .973); }
+  .digit-half-top, .digit-flap-top { line-height: calc(min(48vw, 240px) * .973); }
   .period { top: 10px; right: 10px; font-size: 12px; }
 }
 
@@ -1631,7 +1631,7 @@
   }
 
   .clock-stage {
-    --card-size: min(39vw, 42vh);
+    --card-size: min(43vw, 46vh);
     padding-inline: 8px;
   }
 
