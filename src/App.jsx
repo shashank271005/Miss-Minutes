@@ -216,14 +216,11 @@ function WheelPicker({ value, max, label, onChange }) {
   )
 }
 
-function TimerPage({ onViewChange, onStarted }) {
+function TimerPage() {
   const [duration, setDuration] = useState(15 * 60)
   const [remaining, setRemaining] = useState(15 * 60)
   const [running, setRunning] = useState(false)
   const [started, setStarted] = useState(false)
-  const [showStyle, setShowStyle] = useState(false)
-  const [dragOffset, setDragOffset] = useState(0)
-  const pointerStart = useRef(null)
   const endSound = useRef(new Audio('/timer end.mp3'))
   const soundPlayed = useRef(false)
 
@@ -266,43 +263,7 @@ function TimerPage({ onViewChange, onStarted }) {
   const reset = () => {
     setRunning(false)
     setStarted(false)
-    setShowStyle(false)
-    onViewChange(false)
-    onStarted(false)
     setRemaining(duration)
-  }
-
-  const switchView = (nextView) => {
-    setShowStyle(nextView)
-    setDragOffset(0)
-    onViewChange(nextView)
-  }
-
-  const handlePointerDown = (event) => {
-    if (event.pointerType === 'mouse' && event.button !== 0) return
-    pointerStart.current = event.clientX
-    event.currentTarget.setPointerCapture(event.pointerId)
-  }
-
-  const handlePointerMove = (event) => {
-    if (pointerStart.current === null) return
-    const rawOffset = event.clientX - pointerStart.current
-    const allowedOffset = showStyle ? Math.max(0, rawOffset) : Math.min(0, rawOffset)
-
-    if ((!showStyle && rawOffset < -90) || (showStyle && rawOffset > 90)) {
-      switchView(!showStyle)
-      pointerStart.current = null
-      return
-    }
-
-    setDragOffset(allowedOffset)
-  }
-
-  const handlePointerUp = () => {
-    if (pointerStart.current === null) return
-    const shouldSwitch = showStyle ? dragOffset > 90 : dragOffset < -90
-    switchView(shouldSwitch ? !showStyle : showStyle)
-    pointerStart.current = null
   }
 
   if (!started) {
@@ -318,7 +279,7 @@ function TimerPage({ onViewChange, onStarted }) {
             <WheelPicker value={minutes} max={59} label="minutes" onChange={(value) => updateDuration('minutes', value)} />
             <WheelPicker value={seconds} max={59} label="seconds" onChange={(value) => updateDuration('seconds', value)} />
           </div>
-          <button type="button" className="primary-button timer-start" onClick={() => { soundPlayed.current = false; setStarted(true); setRunning(true); onStarted(true) }}>Start</button>
+          <button type="button" className="primary-button timer-start" onClick={() => { soundPlayed.current = false; setStarted(true); setRunning(true) }}>Start</button>
         </div>
       </section>
     )
@@ -327,58 +288,29 @@ function TimerPage({ onViewChange, onStarted }) {
   const progress = duration ? remaining / duration : 0
   return (
     <section
-      className={`timer-stage${showStyle ? ' show-style' : ''}`}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      onContextMenu={(event) => event.preventDefault()}
+      className="timer-stage"
     >
-      <div className="timer-track" style={{ '--timer-shift': showStyle ? '-50%' : '0%', '--timer-drag-offset': `${dragOffset}px` }}>
-        <div className="timer-view">
-          <div className="mode-page timer-page timer-running">
-            <div className="timer-ring" style={{ '--progress': `${progress * 360}deg` }}>
-              <div className="timer-readout">
-                <h1 id="timer-title">{formatTimer(remaining)}</h1>
-                <p>Total {Math.ceil(duration / 60)} minutes</p>
-              </div>
-            </div>
-            <div className="timer-actions" onPointerDown={(event) => event.stopPropagation()}>
-              <button type="button" className="round-button stop-button" aria-label="Stop timer" onClick={reset}>■</button>
-              <button type="button" className="round-button" aria-label={running ? 'Pause timer' : 'Resume timer'} onClick={() => setRunning(!running)}>
-                {running ? (
-                  <span className="timer-symbol" aria-hidden="true">
-                    <span className="pause-bar" />
-                    <span className="pause-bar" />
-                  </span>
-                ) : (
-                  <svg className="timer-symbol play-symbol" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M7 4.5a1.5 1.5 0 0 1 2.3-1.25l10.2 7.25a1.85 1.85 0 0 1 0 3l-10.2 7.25A1.5 1.5 0 0 1 7 19.5z" />
-                  </svg>
-                )}
-              </button>
-            </div>
+      <div className="mode-page timer-page timer-running">
+        <div className="timer-ring" style={{ '--progress': `${progress * 360}deg` }}>
+          <div className="timer-readout">
+            <h1 id="timer-title">{formatTimer(remaining)}</h1>
+            <p>Total {Math.ceil(duration / 60)} minutes</p>
           </div>
         </div>
-        <div className="timer-view timer-style-view">
-          <div className="timer-style-card">
-            <div className="timer-ring" style={{ '--progress': `${progress * 360}deg` }}>
-              <div className="timer-readout">
-                <h1>{formatTimer(remaining)}</h1>
-                <p>Total {Math.ceil(duration / 60)} minutes</p>
-              </div>
-            </div>
-            <div className="timer-actions" onPointerDown={(event) => event.stopPropagation()}>
-              <button type="button" className="round-button stop-button" aria-label="Stop timer" onClick={reset}>■</button>
-              <button type="button" className="round-button" aria-label={running ? 'Pause timer' : 'Resume timer'} onClick={() => setRunning(!running)}>
-                {running ? (
-                  <span className="timer-symbol" aria-hidden="true"><span className="pause-bar" /><span className="pause-bar" /></span>
-                ) : (
-                  <svg className="timer-symbol play-symbol" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5a1.5 1.5 0 0 1 2.3-1.25l10.2 7.25a1.85 1.85 0 0 1 0 3l-10.2 7.25A1.5 1.5 0 0 1 7 19.5z" /></svg>
-                )}
-              </button>
-            </div>
-          </div>
+        <div className="timer-actions">
+          <button type="button" className="round-button stop-button" aria-label="Stop timer" onClick={reset}>■</button>
+          <button type="button" className="round-button" aria-label={running ? 'Pause timer' : 'Resume timer'} onClick={() => setRunning(!running)}>
+            {running ? (
+              <span className="timer-symbol" aria-hidden="true">
+                <span className="pause-bar" />
+                <span className="pause-bar" />
+              </span>
+            ) : (
+              <svg className="timer-symbol play-symbol" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 4.5a1.5 1.5 0 0 1 2.3-1.25l10.2 7.25a1.85 1.85 0 0 1 0 3l-10.2 7.25A1.5 1.5 0 0 1 7 19.5z" />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
     </section>
@@ -486,8 +418,6 @@ function App() {
   */
   const [time, setTime] = useState(getTime)
   const [showMinimal, setShowMinimal] = useState(false)
-  const [timerStyle, setTimerStyle] = useState(false)
-  const [timerStarted, setTimerStarted] = useState(false)
   const [activeMode, setActiveMode] = useState(() => {
     const savedMode = localStorage.getItem('miss-minutes-active-mode')
     return ['clock', 'timer', 'stopwatch', 'world'].includes(savedMode) ? savedMode : 'clock'
@@ -673,7 +603,7 @@ function App() {
         </div>
       </main>
     ),
-    timer: <TimerPage onViewChange={setTimerStyle} onStarted={setTimerStarted} />,
+    timer: <TimerPage />,
     stopwatch: <StopwatchPage />,
     world: <WorldClock />,
   }
@@ -686,7 +616,7 @@ function App() {
   ]
 
   return (
-    <div className={`app-shell mode-${activeMode}${timerStyle ? ' is-timer-style' : ''}${doNotDisturb ? ' is-do-not-disturb' : ''}`}>
+    <div className={`app-shell mode-${activeMode}${doNotDisturb ? ' is-do-not-disturb' : ''}`}>
       {pages[activeMode]}
       <div className={`settings-menu${settingsOpen ? ' is-open' : ''}`}>
         <button
@@ -761,19 +691,9 @@ function App() {
             aria-current={activeMode === id ? 'page' : undefined}
             onClick={() => {
               setActiveMode(id)
-              if (id !== 'timer') {
-                setTimerStarted(false)
-                setTimerStyle(false)
-              }
             }}
           >
             <Icon name={id} />
-            {id === 'timer' && timerStarted && (
-              <span className="timer-style-hint" aria-hidden="true">
-                <span className={!timerStyle ? 'is-active' : ''} />
-                <span className={timerStyle ? 'is-active' : ''} />
-              </span>
-            )}
             {id === 'clock' && activeMode === 'clock' && (
               <span className="clock-style-hint" aria-hidden="true">
                 <span className={!showMinimal ? 'is-active' : ''} />
